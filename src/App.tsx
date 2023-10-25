@@ -1,24 +1,7 @@
-import "./App.css";
-import RenderProps from "./components/RenderProps";
-function App() {
-  return (
-    <>
-      <RenderProps
-        callbackFn={(data: any) => (
-          <h1>
-            Hello {data.x} - {data.y}
-          </h1>
-        )}
-      />
-      <RenderProps
-        callbackFn={(data: any) => (
-          <h3>
-            Hello {data.x} - {data.y}
-          </h3>
-        )}
-      />
-    </>
-  );
-}
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes";
 
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 export default App;

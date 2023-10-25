@@ -1,6 +1,10 @@
-import { createBrowserRouter, NavLink, Outlet, RouterProvider } from "react-router-dom";
-import Error from "../components/Error";
+import { createBrowserRouter, NavLink, Outlet } from "react-router-dom";
 import UserList from "../components/UserList";
+import LoginPage from "../pages/Login";
+import { Layout } from "antd";
+import { Content, Footer, Header } from "antd/es/layout/layout";
+import Sider from "antd/es/layout/Sider";
+import AdminLayout from "../components/AdminLayout";
 import ProductList from "../components/ProductList";
 // import Home from "../components/Home";
 // import About from "../components/About";
@@ -8,27 +12,24 @@ import ProductList from "../components/ProductList";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ul>
-        <li>
-          <NavLink to={"/user"}>User</NavLink>
-        </li>
-        <li>
-          <NavLink to={"/product"}>Product</NavLink>
-        </li>
-        <Outlet />
-      </ul>
-    ),
-    errorElement: <Error />,
+    element: <h1>ABC</h1>,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
     children: [
-      // {
-      //   path: "user",
-      //   element: <UserList />,
-      // },
-      // {
-      //   path: "product",
-      //   element: <ProductList />,
-      // },
+      {
+        path: "user",
+        element: <UserList />,
+      },
+      {
+        path: "product",
+        element: <ProductList />,
+      },
     ],
   },
 ]);

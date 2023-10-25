@@ -1,10 +1,5 @@
-function ProductList({ data }: { data: Array<any> }) {
-  return (
-    <ul>
-      {data.map((e) => (
-        <li>{e}</li>
-      ))}
-    </ul>
-  );
+import React from "react";
+
+export default function ProductList() {
+  return <div>ProductList</div>;
 }
-export default ProductList;

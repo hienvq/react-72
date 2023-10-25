@@ -1,19 +1,15 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://64cbbf882eafdcdc8519400a.mockapi.io/",
-  headers: {
-    token: "ABC",
-  },
+  baseURL: "https://64cbbf882eafdcdc8519400a.mockapi.io",
 });
 axiosClient.interceptors.request.use(
   function (config) {
-    console.log("HienVQ ~  config:", config);
     // Do something before request is sent
-    if (config.url === "users") {
-      config.headers.test = "check";
+    const token = localStorage.getItem("access-token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
-
     return config;
   },
   function (error) {
