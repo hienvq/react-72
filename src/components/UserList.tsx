@@ -5,6 +5,8 @@ import { deleteUsers, getUsers } from "../apis/UserApi";
 import { ExclamationCircleOutlined, PlusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import useUserList from "../hooks/useUserList";
 import { Navigate } from "react-router-dom";
+import UserModal from "./UserModal";
+import { useDispatch } from "react-redux";
 
 interface DataType {
   id: string;
@@ -35,7 +37,25 @@ const UserList: React.FC = () => {
       title: "Action",
       render: (_, record) => (
         <Space size="middle">
-          <a>Edit</a>
+          <a
+            href="/"
+            onClick={(event: any) => {
+              event.preventDefault();
+              dispatch({
+                type: "edit",
+                payload: {
+                  isOpen: true,
+                  initValue: {
+                    id: record.id,
+                    name: record.name,
+                    avatarPath: record.avatar,
+                  },
+                },
+              });
+            }}
+          >
+            Edit
+          </a>
           <a
             href="/"
             onClick={(event: any) => {
@@ -60,25 +80,20 @@ const UserList: React.FC = () => {
     },
   ];
   const [data, getData]: any = useUserList();
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const dispatch = useDispatch();
   const showModal = () => {
-    setIsModalOpen(true);
+    dispatch({
+      type: "create",
+      payload: {
+        isOpen: true,
+        initValue: {},
+      },
+    });
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
   return (
     <>
-      <Modal title="Create User" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
+      <UserModal />
       <Flex justify="flex-end" style={{ marginBottom: 20 }}>
         <Button type="primary" icon={<PlusCircleOutlined />} onClick={showModal}>
           ADD
