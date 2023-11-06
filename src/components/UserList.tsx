@@ -7,6 +7,8 @@ import useUserList from "../hooks/useUserList";
 import { Navigate } from "react-router-dom";
 import UserModal from "./UserModal";
 import { useDispatch } from "react-redux";
+import { PAGE_SIZE } from "../common/constants";
+import { createAct, editAct } from "../store/reducers/userReducer";
 
 interface DataType {
   id: string;
@@ -41,17 +43,29 @@ const UserList: React.FC = () => {
             href="/"
             onClick={(event: any) => {
               event.preventDefault();
-              dispatch({
-                type: "edit",
-                payload: {
+              // dispatch({
+              //   type: "edit",
+              //   payload: {
+              //     isOpen: true,
+              //     initValue: {
+              //       id: record.id,
+              //       name: record.name,
+              //       avatarPath: record.avatar,
+              //       selectBox: 2,
+              //     },
+              //   },
+              // });
+              dispatch(
+                editAct({
                   isOpen: true,
                   initValue: {
                     id: record.id,
                     name: record.name,
                     avatarPath: record.avatar,
+                    selectBox: 2,
                   },
-                },
-              });
+                } as any)
+              );
             }}
           >
             Edit
@@ -68,7 +82,7 @@ const UserList: React.FC = () => {
                 cancelText: "Cancel",
                 onOk: async () => {
                   await deleteUsers(record.id);
-                  await getData();
+                  await getData(1);
                 },
               });
             }}
@@ -79,18 +93,26 @@ const UserList: React.FC = () => {
       ),
     },
   ];
-  const [data, getData]: any = useUserList();
+  const [data, total, getData]: any = useUserList();
   const dispatch = useDispatch();
   const showModal = () => {
-    dispatch({
-      type: "create",
-      payload: {
+    // dispatch({
+    //   type: "create",
+    //   payload: {
+    //     isOpen: true,
+    //     initValue: {},
+    //   },
+    // });
+    dispatch(
+      createAct({
         isOpen: true,
         initValue: {},
-      },
-    });
+      } as any)
+    );
   };
-
+  const handleChangePage = async (page: number) => {
+    await getData(page);
+  };
   return (
     <>
       <UserModal />
@@ -99,7 +121,12 @@ const UserList: React.FC = () => {
           ADD
         </Button>
       </Flex>
-      <Table columns={columns} dataSource={data} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={data}
+        rowKey="id"
+        pagination={{ pageSize: PAGE_SIZE, total: total, onChange: handleChangePage }}
+      />
     </>
   );
 };

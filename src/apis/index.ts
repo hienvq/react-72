@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://64cbbf882eafdcdc8519400a.mockapi.io",
+  baseURL: "http://54.151.228.231/api",
 });
 axiosClient.interceptors.request.use(
   function (config) {

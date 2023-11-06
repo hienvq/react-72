@@ -6,13 +6,14 @@ import { Content, Footer, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import AdminLayout from "../components/AdminLayout";
 import ProductList from "../components/ProductList";
+import Test from "../components/Test";
 // import Home from "../components/Home";
 // import About from "../components/About";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1>ABC</h1>,
+    element: <Test />,
   },
   {
     path: "/login",
