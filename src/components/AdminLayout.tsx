@@ -12,7 +12,8 @@ import {
 import { Button, MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
-
+// import styles from './style.module.css'
+// import './style.css'
 const { Header, Content, Footer, Sider } = Layout;
 
 const AdminLayout: React.FC = () => {
